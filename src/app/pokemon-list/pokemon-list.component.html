@@ -1,0 +1,43 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md-12 mt-4">
+        <h2 class="mb-4">List of Pokémon</h2>
+        <!-- Agregar el campo de búsqueda -->
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" [(ngModel)]="searchTerm" placeholder="Search Pokémon by name">
+          <button class="btn btn-primary" (click)="searchPokemon()">Search</button>
+          <button class="btn btn-secondary" (click)="clearSearch()">Clear</button>
+        </div>
+        <div *ngIf="filteredPokemonList.length > 0; else noResults">
+          <div class="row">
+            <!-- Mostrar 4 tarjetas por fila en pantallas pequeñas y 3 en pantallas medianas -->
+            <!-- El ngFor recorre la lista de Pokémon filtrados y muestra cada uno de ellos en una tarjeta -->
+            <div class="col-xs-6 col-md-3" *ngFor="let pokemon of filteredPokemonList">
+              <div class="card mb-3">
+                <div class="row g-0">
+                  <div class="col-md-12">
+                    <!-- Mostrar la imagen del Pokémon con la clase "img-fluid" para que sea responsive -->
+                    <img [src]="pokemon.imageUrl" class="img-fluid" alt="{{ pokemon.name }}">
+                  </div>
+                  <div class="col-md-12">
+                    <div class="card-body">
+                      <!-- Mostrar el nombre y el ID del Pokémon en la tarjeta -->
+                      <h5 class="card-title">{{ pokemon.name }}</h5>
+                      <p class="card-text">ID: {{ pokemon.id }}</p>
+                      <!-- Agregar un botón "View Details" con el evento click que llama a la función goToDetails -->
+                      <a (click)="goToDetails(pokemon.id)" class="btn btn-primary">View Details</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Plantilla para mostrar un mensaje cuando no se encuentren resultados de búsqueda -->
+        <ng-template #noResults>
+          <p>No Pokémon found with the name "{{ searchTerm }}".</p>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  
